@@ -1,8 +1,17 @@
 import { NextResponse } from 'next/server'
 
+interface HealthStatus {
+  status: string;
+  [key: string]: unknown;
+}
+
 // Add static cache with TTL
-const cache = {
-  status: null as any,
+const cache: {
+  status: HealthStatus | null;
+  timestamp: number;
+  ttl: number;
+} = {
+  status: null,
   timestamp: 0,
   ttl: 5 * 60 * 1000 // 5 minutes
 }

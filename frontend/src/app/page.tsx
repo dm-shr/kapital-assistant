@@ -10,7 +10,7 @@ export default function Page() {
         <h1 className="text-xl sm:text-2xl font-bold mb-1 sm:mb-2">Kapital Assistant</h1>
         <h2 className="text-base sm:text-lg text-gray-700 mb-2 sm:mb-4">AI-powered interface for exploring financial documentation</h2>
 
-        <p className="text-xs sm:text-sm text-gray-600 mb-2">Interested? Let's stay in touch!</p>
+        <p className="text-xs sm:text-sm text-gray-600 mb-2">Interested? Let&apos;s stay in touch!</p>
         <div className="flex justify-center space-x-4 mb-2">
           <a
             href="https://github.com/dm-shr"

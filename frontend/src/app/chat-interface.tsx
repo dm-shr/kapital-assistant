@@ -4,12 +4,10 @@ import { useState, useEffect, useRef, type KeyboardEvent } from "react"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { Send } from "lucide-react"
-import Image from "next/image"
 import ReactMarkdown from "react-markdown"
 import remarkGfm from "remark-gfm"
 import { ZoomableImage } from "@/components/zoomable-image"
 import { ServerStatus } from "@/components/server-status"
-import { PromptSuggestions } from "@/components/prompt-suggestions"
 import { PROMPT_EXAMPLES } from "./constants"
 import type { Message } from "./types"
 import { LoadingMessage } from "@/components/loading-message"
@@ -111,8 +109,8 @@ export default function ChatInterface({ initialMessages }: ChatInterfaceProps) {
                 <ReactMarkdown
                   remarkPlugins={[remarkGfm]}
                   components={{
-                    ol: ({node, ...props}) => <ol className="list-decimal pl-4 my-2" {...props} />,
-                    ul: ({node, ...props}) => <ul className="list-disc pl-4 my-2" {...props} />,
+                    ol: ({...props}) => <ol className="list-decimal pl-4 my-2" {...props} />,
+                    ul: ({...props}) => <ul className="list-disc pl-4 my-2" {...props} />,
                   }}
                 >
                   {message.content}
