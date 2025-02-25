@@ -1,24 +1,24 @@
 # AI Assistant "Kapital"
 Smart AI-powered interface to chat over the financial reportings. 🤖
 
-This is a slightly polished version of what we built at [Hack Genesis 2024](https://hackgenesis.com/) as a teams "Счастье не за горами" ("Happiness is not far away"), which secured as the first place. 🏆
+This is a slightly polished version of what we built at [Hack Genesis 2024](https://hackgenesis.com/) which secured as the first place. 🏆
 
 The project is live, [**check it out here.**](https://kapital-assistant.vercel.app/)
 
 ## Codebase
 
 ```
-├── app                     # Backend application
-│   ├── api.py             # FastAPI application
-│   ├── common             # Common utilities and tools
+├── app                     # Backend app
+│   ├── api.py             # FastAPI app
+│   ├── common             # Utilities and Tools
 │   │   ├── __init__.py   # Prompts and common params
-│   │   ├── knowledge_graphs.py
-│   │   ├── structured_tools.py
-│   │   ├── unstructured_tools.py
-│   │   └── utils.py
+│   │   ├── knowledge_graphs.py # Code for matching user query and the correct company DB
+│   │   ├── structured_tools.py # Tools to be called by an agent for tabular data analysis 
+│   │   ├── unstructured_tools.py # Tools for textual unstructured data 
+│   │   └── utils.py # common utils
 │   └── prompts           # YAML prompt templates
 ├── frontend             # Next.js frontend application
-├── data                 # Contains data and DB for the project
+├── data                 # Data and vector DBs for the project
 ├── Dockerfile          # Backend Dockerfile
 └── docker-compose.yml  # Docker compose configuration
 ```
@@ -45,7 +45,7 @@ openssl rand -base64 32
 
 Add it to your `.env` file along with other required variables.
 
-**NOTE**: You would need an OpenAI API key for that.
+**NOTE**: You would need an OpenAI API key for the current project implementation.
 
 3. Download required data:
 ```bash
@@ -62,6 +62,8 @@ docker-compose up -d --build
 ```bash
 ngrok http 8000
 ```
+
+You would need to install ngrok for that.
 
 ### Frontend Setup
 
