@@ -166,7 +166,7 @@ cython_debug/
 #data
 data/
 notebooks/
-
+scripts/
 **/**.csv
 **/**.zip
 **/**.gz
