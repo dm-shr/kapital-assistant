@@ -46,7 +46,7 @@ export default function ChatInterface({ initialMessages }: ChatInterfaceProps) {
 
     while (retryCount < maxRetries) {
       try {
-        const response = await fetch('/api/chat', {
+        const response = await fetch('/api/chat', {  // Changed from absolute URL to relative
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

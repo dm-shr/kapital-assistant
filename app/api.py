@@ -8,6 +8,7 @@ from typing import Optional
 from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi import HTTPException
+from fastapi import Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -30,15 +31,49 @@ load_dotenv()
 
 app = FastAPI()
 
+# Get API keys from environment and split into list
+API_KEYS = set(os.getenv("API_KEYS", "").split(","))
+
+
+# HTTPS enforcement middleware for production
+@app.middleware("http")
+async def enforce_https(request: Request, call_next):
+    if os.getenv("environment") == "production":
+        if request.url.scheme != "https":
+            return JSONResponse(
+                status_code=403, content={"detail": "HTTPS is required in production"}
+            )
+    return await call_next(request)
+
+
 # Configure CORS with more specific settings
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=os.getenv("ALLOWED_ORIGINS", "http://localhost:3000,").split(","),
+    allow_origins=os.getenv("ALLOWED_ORIGINS", "http://localhost:3000").split(","),
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "OPTIONS"],  # Be more specific about methods
     allow_headers=["*"],
-    max_age=3600,  # Cache preflight requests for 1 hour
+    max_age=3600,
 )
+
+
+# Add API key validation middleware
+@app.middleware("http")
+async def validate_api_key(request: Request, call_next):
+    if request.url.path == "/api/health":
+        return await call_next(request)
+
+    auth_header = request.headers.get("Authorization")
+    if not auth_header or not auth_header.startswith("Bearer "):
+        return JSONResponse(
+            status_code=401, content={"detail": "Missing or invalid Authorization header"}
+        )
+
+    api_key = auth_header.split(" ")[1]
+    if api_key not in API_KEYS:
+        return JSONResponse(status_code=403, content={"detail": "Invalid API key"})
+
+    return await call_next(request)
 
 
 @app.exception_handler(RequestValidationError)

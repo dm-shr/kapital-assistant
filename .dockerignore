@@ -1,0 +1,9 @@
+frontend
+data/raw_pdf
+data/processed_csv
+scripts
+notebooks
+resources
+*.ipynb
+*.zip
+*.csv
