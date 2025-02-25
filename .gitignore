@@ -165,12 +165,11 @@ cython_debug/
 
 #data
 data/
+notebooks/
 
-**/**.json
 **/**.csv
 **/**.zip
 **/**.gz
-notebooks/
 
 # MacOS
 .DS_Store
