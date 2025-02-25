@@ -9,7 +9,7 @@ import remarkGfm from "remark-gfm"
 import { ZoomableImage } from "@/components/zoomable-image"
 import { ServerStatus } from "@/components/server-status"
 import { PROMPT_EXAMPLES } from "./constants"
-import type { Message } from "./types"
+import type { Message, ChatResponse } from "./types"
 import { LoadingMessage } from "@/components/loading-message"
 import { CollapsiblePrompts } from "@/components/collapsible-prompts"
 
