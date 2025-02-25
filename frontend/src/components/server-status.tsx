@@ -2,7 +2,11 @@
 
 import { useEffect, useState, useRef } from "react"
 
-export function ServerStatus() {
+interface ServerStatusProps {
+  show?: boolean;
+}
+
+export function ServerStatus({ show = false }: ServerStatusProps) {
   const [isOnline, setIsOnline] = useState<boolean | null>(null)
   const checkCount = useRef(0)
   const lastCheck = useRef<number>(0)
@@ -43,7 +47,7 @@ export function ServerStatus() {
     }
   }, []) // Empty dependency array
 
-  if (isOnline === null) return null
+  if (!show || isOnline === null) return null
 
   return (
     <div className="px-2 py-1 bg-gray-100 text-xs flex justify-end items-center gap-2">

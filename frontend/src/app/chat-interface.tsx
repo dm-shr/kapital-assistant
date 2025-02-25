@@ -94,7 +94,7 @@ export default function ChatInterface({ initialMessages }: ChatInterfaceProps) {
 
   return (
     <div className="flex flex-col h-[calc(100vh-14rem)] sm:h-[calc(100vh-16rem)] bg-background border border-gray-200 rounded-lg overflow-hidden">
-      <ServerStatus />
+      <ServerStatus show={false} />
       <div className="flex-grow overflow-y-auto p-1.5 sm:p-3 space-y-2 sm:space-y-3">
         {messages.map((message, index) => (
           <div key={index} className={`flex flex-col ${message.role === "user" ? "items-end" : "items-start"}`}>
