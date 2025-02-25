@@ -1,9 +1,11 @@
-# AI Assistant "Kapital"
-Smart AI-powered interface to chat over the financial reportings. 🤖
+# "Kapital" Assistant
+AI-powered interface to chat over the financial reportings. 🤖
 
 This is a slightly polished version of what we built at [Hack Genesis 2024](https://hackgenesis.com/) which secured as the first place. 🏆
 
 The project is live, [**check it out here.**](https://kapital-assistant.vercel.app/)
+
+Currently, only limited number of reports is available, check the demo page for more details.
 
 ## Codebase
 
