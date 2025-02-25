@@ -40,7 +40,7 @@ export default function Page() {
       <div className="mt-4 text-center text-sm text-gray-600">
         <span className="font-medium">Made by: </span>
         <a
-          href="https://www.linkedin.com/in/author1/"
+          href="https://www.linkedin.com/in/dshiriaev/"
           target="_blank"
           rel="noopener noreferrer"
           className="text-blue-600 hover:text-blue-800"
@@ -49,7 +49,7 @@ export default function Page() {
         </a>
         <span className="mx-1">•</span>
         <a
-          href="https://www.linkedin.com/in/author2/"
+          href="https://www.linkedin.com/in/aleksandr-perevalov/"
           target="_blank"
           rel="noopener noreferrer"
           className="text-blue-600 hover:text-blue-800"
@@ -58,7 +58,7 @@ export default function Page() {
         </a>
         <span className="mx-1">•</span>
         <a
-          href="https://www.linkedin.com/in/author3/"
+          href="https://www.linkedin.com/in/vladislav-raskoshinskii/"
           target="_blank"
           rel="noopener noreferrer"
           className="text-blue-600 hover:text-blue-800"
@@ -67,7 +67,7 @@ export default function Page() {
         </a>
         <span className="mx-1">•</span>
         <a
-          href="https://www.linkedin.com/in/author4/"
+          href="https://www.linkedin.com/in/ilyamoshonkin/"
           target="_blank"
           rel="noopener noreferrer"
           className="text-blue-600 hover:text-blue-800"
