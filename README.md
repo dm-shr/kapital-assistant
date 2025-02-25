@@ -10,15 +10,15 @@ Currently, only limited number of reports is available, check the demo page for 
 ## Codebase
 
 ```
-├── app                     # Backend app
-│   ├── api.py             # FastAPI app
-│   ├── common             # Utilities and Tools
-│   │   ├── __init__.py   # Prompts and common params
-│   │   ├── knowledge_graphs.py # Code for matching user query and the correct company DB
-│   │   ├── structured_tools.py # Tools to be called by an agent for tabular data analysis 
+├── app                           # Backend app
+│   ├── api.py                    # FastAPI app
+│   ├── common                   # Utilities and Tools
+│   │   ├── __init__.py          # Prompts and common params
+│   │   ├── knowledge_graphs.py  # Code for matching user query and the correct company DB
+│   │   ├── structured_tools.py  # Tools to be called by an agent for tabular data analysis 
 │   │   ├── unstructured_tools.py # Tools for textual unstructured data 
-│   │   └── utils.py # common utils
-│   └── prompts           # YAML prompt templates
+│   │   └── utils.py             # common utils
+│   └── prompts                  # YAML prompt templates
 ├── frontend             # Next.js frontend application
 ├── data                 # Data and vector DBs for the project
 ├── Dockerfile          # Backend Dockerfile
