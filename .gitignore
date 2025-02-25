@@ -168,6 +168,8 @@ data/
 
 **/**.json
 **/**.csv
+**/**.zip
+**/**.gz
 notebooks/
 
 # MacOS
