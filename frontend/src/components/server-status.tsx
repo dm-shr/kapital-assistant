@@ -1,40 +1,58 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import { AlertCircle } from "lucide-react"
+import { useEffect, useState, useRef } from "react"
 
 export function ServerStatus() {
-  const [isServerDown, setIsServerDown] = useState(false)
+  const [isOnline, setIsOnline] = useState<boolean | null>(null)
+  const checkCount = useRef(0)
+  const lastCheck = useRef<number>(0)
 
   useEffect(() => {
-    const checkServer = async () => {
+    // Prevent multiple checks in development
+    if (checkCount.current > 0) {
+      return
+    }
+    checkCount.current++
+
+    const checkHealth = async () => {
+      const now = Date.now()
+      // Prevent checks more frequent than every 5 seconds
+      if (now - lastCheck.current < 5000) {
+        return
+      }
+      lastCheck.current = now
+
       try {
-        const response = await fetch('/api/health')
-        setIsServerDown(!response.ok)
-      } catch (error) {
-        setIsServerDown(true)
+        const res = await fetch('/api/health')
+        setIsOnline(res.ok)
+      } catch {
+        setIsOnline(false)
       }
     }
 
-    checkServer()
-    const interval = setInterval(checkServer, 30000) // Check every 30 seconds
-    return () => clearInterval(interval)
-  }, [])
+    // Single initial check after delay
+    const timeoutId = setTimeout(checkHealth, 5000)
 
-  if (!isServerDown) return null
+    // Much less frequent interval checks
+    const intervalId = setInterval(checkHealth, 1 * 60 * 1000)
+
+    // Cleanup function
+    return () => {
+      clearTimeout(timeoutId)
+      clearInterval(intervalId)
+    }
+  }, []) // Empty dependency array
+
+  if (isOnline === null) return null
 
   return (
-    <div className="bg-red-50 border-l-4 border-red-400 p-4 mb-4">
-      <div className="flex">
-        <div className="flex-shrink-0">
-          <AlertCircle className="h-5 w-5 text-red-400" />
-        </div>
-        <div className="ml-3">
-          <p className="text-sm text-red-700">
-            Server connection error. Please try again later or contact support.
-          </p>
-        </div>
-      </div>
+    <div className="px-2 py-1 bg-gray-100 text-xs flex justify-end items-center gap-2">
+      <span>Server:</span>
+      {isOnline ? (
+        <span className="text-green-600">Online</span>
+      ) : (
+        <span className="text-red-600">Offline</span>
+      )}
     </div>
   )
 }
