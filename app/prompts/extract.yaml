@@ -1,0 +1,16 @@
+input_variables: [source_text, source_data]
+
+template: 'You are an AI assistant in financial data analysis.
+
+
+Answer the following question: "{source_text}"
+
+Based on this data:
+
+
+{source_data}
+
+Extract only the necessary data based on the question:
+'
+template_format: f-string
+_type: prompt
