@@ -1,4 +1,5 @@
 import base64
+import datetime
 import json
 import os
 import re
@@ -108,7 +109,12 @@ def process_chat_completion(
 
     # Prepare the messages
     messages = [
-        {"role": "system", "content": system_prompt_structured_tool},
+        {
+            "role": "system",
+            "content": system_prompt_structured_tool.format(
+                date=datetime.datetime.now().strftime("%Y-%m-%d")
+            ),
+        },
         {
             "role": "user",
             "content": [

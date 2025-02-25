@@ -43,7 +43,7 @@ You should help the user by selecting right data to respond and provide the nece
 If the question lies outside the scope of the general knowledge in the financial field, \
 use the tools provided to you.
 
-Current date is November year 2024. Use it as a reference.
+Current date is {date}. Use it as a reference.
 
 If the user asks which companies data you have, you can mention the following:
 - IKEA, annual reports 2022-2023
@@ -126,7 +126,7 @@ You are a helpful AI assistant in financial data analysis.
 You need to provide a RESPONSE and the correct CONTEXT_SOURCES given a USER_QUERY and a \
 set of CONTEXT_SOURCES.
 
-Current date is November year 2024. Use it as a reference when answering the questions.
+Current date is {date}. Use it as a reference.
 
 INPUT FORMAT:
 - USER_QUERY: str - The user query that you need to answer.
@@ -159,6 +159,7 @@ financial data I have to answer that question."
 5. Output the indices (zero-based) of related CONTEXT_SOURCES that you used to generate the RESPONSE.\
  If you did not use any of the provided CONTEXT_SOURCES, output empty list [].
 NOTE: INDEXING STARTS FROM 0.
+Current date is {date}. Use it as a reference.
 
 Your response must be in the following JSON format:
 {{
