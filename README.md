@@ -9,20 +9,47 @@ Currently, only limited number of reports is available, check the demo page for 
 
 ## Codebase
 
-```
-├── app                           # Backend app
-│   ├── api.py                    # FastAPI app
-│   ├── common                   # Utilities and Tools
-│   │   ├── __init__.py          # Prompts and common params
-│   │   ├── knowledge_graphs.py  # Code for matching user query and the correct company DB
-│   │   ├── structured_tools.py  # Tools to be called by an agent for tabular data analysis 
-│   │   ├── unstructured_tools.py # Tools for textual unstructured data 
-│   │   └── utils.py             # common utils
-│   └── prompts                  # YAML prompt templates
-├── frontend             # Next.js frontend application
-├── data                 # Data and vector DBs for the project
-├── Dockerfile          # Backend Dockerfile
-└── docker-compose.yml  # Docker compose configuration
+### Project Structure
+
+```plaintext
+  # Backend application
+├── app/
+
+    # FastAPI application
+│   ├── api.py
+
+    # Core utilities and tools
+│   ├── common/
+
+      # Common parameters and prompts
+│   │   ├── __init__.py
+
+      # Company database matching logic
+│   │   ├── knowledge_graphs.py
+
+      # Agent tools for tabular analysis
+│   │   ├── structured_tools.py
+
+      # Agent tools for text analysis
+│   │   ├── unstructured_tools.py
+
+      # Shared utility functions
+│   │   └── utils.py
+
+    # YAML-based prompt templates
+│   └── prompts/
+
+  # Next.js web application
+├── frontend/
+
+  # Project data and vector databases
+├── data/
+
+  # Backend container definition
+├── Dockerfile
+
+  # Multi-container orchestration
+└── docker-compose.yml
 ```
 
 ## Getting Started
@@ -40,14 +67,14 @@ cd kapital-assistant
 cp .env.example .env
 ```
 
-Generate a secure API key:
+Generate two secure API keys for development and production:
 ```bash
 openssl rand -base64 32
 ```
 
-Add it to your `.env` file along with other required variables.
+Add both to your `.env` file, comma-separated, along with other required variables.
 
-**NOTE**: You would need an OpenAI API key for the current project implementation.
+**NOTE**: You would also need an OpenAI API key for the current project implementation.
 
 3. Download required data:
 ```bash
@@ -62,28 +89,30 @@ docker-compose up -d --build
 
 5. (Optional) Set up ngrok for external access:
 ```bash
-ngrok http 8000
+ngrok http 8000 # you may also specify the domain
 ```
 
-You would need to install ngrok for that.
+You would need to install [**ngrok**](https://ngrok.com/) for that.
 
 ### Frontend Setup
 
-1. Development mode:
+1. Development:
 ```bash
 cd frontend
-cp .env.development.example .env.development
-# Add your configuration to .env.development
+cp .env.local.example .env.local
+# Add your configuration to .env.local
 npm install
 npm run dev
 ```
 
-2. Production deployment:
+2. Production:
 - Deploy to Vercel:
   1. Connect your GitHub repository
   2. Add environment variables in Vercel project settings:
      - `PROD_API_URL`: Your backend API URL
      - `PROD_API_KEY`: Your API key (must match backend's API_KEYS)
+     - `DEV_API_URL`: Your backend API URL for development
+     - `DEV_API_KEY`: Your development API key (must match backend's API_KEYS)
 
 
 ## Architecture Overview
@@ -93,7 +122,7 @@ npm run dev
 ----
 
 
-Key points:
+Key highlights:
 * The assistant engine is developed using LangChain.
 * The agent app is using Tools for interacting with the external world.
 * Hybrid search (vector similarity + BM25) is used for the RAG.
@@ -126,12 +155,12 @@ The use of knowledge graph helps quickly map the user-used company name with the
 ### Data Ingestion Pipeline
 
 #### Structured Data (Tables)
-<img src="./resources/img/structured-ingestion.jpg" alt="Structured Data Ingsestion" width="700"/>
+<img src="./resources/img/structured-ingestion.jpg" alt="Structured Data Ingestion" width="700"/>
 
 ----
 
-#### Untructured Data (Text)
-<img src="./resources/img/unstructured-ingestion.jpg" alt="Unstructured Data Ingsestion" width="700"/>
+#### Unstructured Data (Text)
+<img src="./resources/img/unstructured-ingestion.jpg" alt="Unstructured Data Ingestion" width="700"/>
 
 ----
 
@@ -142,7 +171,7 @@ The use of knowledge graph helps quickly map the user-used company name with the
 - [Vladislav Raskoshinskii](https://www.linkedin.com/in/vladislav-raskoshinskii/)
 - [Ilya Moshonkin](https://www.linkedin.com/in/ilyamoshonkin/)
 
-## Connect With me
+## Connect?
 
 [![GitHub](https://img.shields.io/badge/GitHub-dm--shr-black?style=flat&logo=github)](https://github.com/dm-shr)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Dmitrii_Shiriaev-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/dshiriaev/)
