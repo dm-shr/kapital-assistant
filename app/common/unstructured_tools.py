@@ -297,11 +297,27 @@ opportunities, trends, and other qualitative aspects of the financial data.
         logger.info(f"Used sources: {used_sources}")
 
         result_markdown = f"{result['response']}"
+
+        def format_file_name(file_name: str) -> str:
+            company, year, report_type = file_name.replace(".pdf", "").split("_")
+            company_mapping = {"ikea": "IKEA", "volvo": "Volvo", "hm": "H&M", "h&m": "H&M"}
+            report_mapping = {
+                "q1": "Q1",
+                "q2": "Q2",
+                "q3": "Q3",
+                "q4": "Q4",
+                "annual": "annual",
+                "fy": "annual",
+            }
+            report_type = report_mapping[report_type.lower()]
+            company = company_mapping[company.lower()]
+            return f"{company} {report_type} report, year {year}"
+
         if len(used_sources) > 0:
             result_markdown += "\n\n**Sources:**\n\n"
             result_markdown += "\n".join(
                 [
-                    f"- File name: {file_name}\n  - Pages: {', '.join(used_sources[file_name])}"
+                    f"- {format_file_name(file_name)}\n  - Pages: {', '.join(used_sources[file_name])}"
                     for file_name in used_sources
                 ]
             )
