@@ -1,4 +1,5 @@
 import base64
+import datetime
 import io
 import json
 import os
@@ -18,7 +19,9 @@ from langchain_openai import OpenAIEmbeddings
 from PIL import Image
 
 from app.common import logger
+from app.common import MODEL_UNSTRUCTURED
 from app.common import OPENAI_API_KEY
+from app.common import OPENAI_EMBEDDING_MODEL
 from app.common import PROMPT_PATH
 from app.common.knowledge_graphs import company_matcher
 from app.common.utils import get_base_64_string
@@ -28,7 +31,7 @@ from app.common.utils import metadata_filter_callable
 
 faiss_vdb = "faiss_unstructured_pydata_v0.0.2"
 
-emebeddings = OpenAIEmbeddings(model="text-embedding-3-small", api_key=OPENAI_API_KEY)
+emebeddings = OpenAIEmbeddings(model=OPENAI_EMBEDDING_MODEL, api_key=OPENAI_API_KEY)
 
 db = FAISS.load_local(
     os.path.join("data", "unstructured_vdb", faiss_vdb),
@@ -40,7 +43,7 @@ documents = load_docs_from_jsonl(os.path.join("data", "unstructured_vdb", faiss_
 
 
 llm = ChatOpenAI(
-    model="gpt-4o",
+    model=MODEL_UNSTRUCTURED,
     api_key=OPENAI_API_KEY,
     model_kwargs={"response_format": {"type": "json_object"}},
 )
@@ -156,7 +159,7 @@ opportunities, trends, and other qualitative aspects of the financial data.
         quarters: Optional[List[str]] = None,
         run_manager=None,
     ) -> str:
-        years = years if years is not None else [2023]
+        years = years if years is not None else [datetime.datetime.now().year - 1]
         quarters = quarters if quarters is not None else ["q4", "annual"]
         quarters = [quarter.lower() for quarter in quarters]
         input_ = {

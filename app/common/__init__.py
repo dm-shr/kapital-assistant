@@ -29,7 +29,10 @@ logger = logging.getLogger(__name__)
 
 # Parameters for LLM
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-MODEL = "gpt-4o-mini"
+MODEL_STRUCTURED = "gpt-4o-mini"  # to proceess questions about structured data (tables)
+MODEL_UNSTRUCTURED = "gpt-4o-mini"  # to process questions about unstructured data (text)
+MODEL_AGENT = "gpt-4o"  # to route the question to the correct tool
+OPENAI_EMBEDDING_MODEL = "text-embedding-3-small"
 PROMPT_PATH = os.path.join("app", "prompts")
 
 TOP_K = 5

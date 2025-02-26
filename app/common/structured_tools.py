@@ -1,4 +1,5 @@
 import base64
+import datetime
 import io
 import json
 import os
@@ -16,8 +17,9 @@ from pydantic import BaseModel
 from pydantic import Field
 
 from app.common import logger
-from app.common import MODEL
+from app.common import MODEL_STRUCTURED
 from app.common import OPENAI_API_KEY
+from app.common import OPENAI_EMBEDDING_MODEL
 from app.common import TOP_K
 from app.common.knowledge_graphs import company_matcher
 from app.common.utils import get_base_64_string
@@ -31,7 +33,7 @@ faiss_vdb = "faiss_structured_pydata_v0.0.1_full_size_score_above_50"
 
 db = FAISS.load_local(
     os.path.join("data", "structured_vdb", faiss_vdb),
-    OpenAIEmbeddings(model="text-embedding-3-small", api_key=OPENAI_API_KEY),
+    OpenAIEmbeddings(model=OPENAI_EMBEDDING_MODEL, api_key=OPENAI_API_KEY),
     allow_dangerous_deserialization=True,
 )
 
@@ -146,7 +148,8 @@ class StructuredTool(BaseTool):
         quarters: Optional[List[str]] = None,
         run_manager=None,
     ) -> str:
-        years = years if years is not None else [2023]
+        years = years if years is not None else [datetime.datetime.now().year - 1]
+
         quarters = quarters if quarters is not None else ["q4", "annual"]
         quarters = [quarter.lower() for quarter in quarters]
         input_ = {
@@ -212,7 +215,7 @@ class StructuredTool(BaseTool):
                 }
             )
 
-        result = process_chat_completion(source_data, user_query, model=MODEL)
+        result = process_chat_completion(source_data, user_query, model=MODEL_STRUCTURED)
 
         # try to convert into dict
         try:

@@ -22,6 +22,7 @@ from langchain_openai import ChatOpenAI
 from pydantic import BaseModel
 
 from app.common import logger
+from app.common import MODEL_AGENT
 from app.common import OPENAI_API_KEY
 from app.common import system_prompt
 from app.common.structured_tools import StructuredTool
@@ -104,7 +105,7 @@ prompt_template = ChatPromptTemplate.from_messages(
 )
 
 llm = ChatOpenAI(
-    model="gpt-4o",
+    model=MODEL_AGENT,
     api_key=OPENAI_API_KEY,
 )
 
