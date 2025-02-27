@@ -16,10 +16,9 @@ Currently, only limited number of reports is available, look at the demo page fo
 Key stages:
 * LLM agent refactors a user query and extracts metadata;
 * Metadata is passed through the knowledge graph to match the query with the correct company document collection;
-* The LLM agent calls the appropriate retriever tool to search for either of two options
+* The LLM agent calls the appropriate retriever tool to search within the company collection for a specified period for either of two options:
   - structural data (tabular entries), or
-  - unstructured information (text)
-detwithin the company collection for a specified period;
+  - unstructured information (text);
 * Hybrid search (vector similarity + BM25) is used for the RAG. For structural collections, search is performed against OCRed tables with LLM-extracted metadata;
 * LLM chooses the most relevant documents, sends the sources to the user and provides the synthesized response.
 
