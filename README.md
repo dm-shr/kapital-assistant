@@ -5,52 +5,57 @@ This is a slightly polished version of what we have built at [Hack Genesis 2024]
 
 The project is live, [**check it out here.**](https://kapital-assistant.vercel.app/)
 
-Currently, only limited number of reports is available, check the demo page for more details.
+Currently, only limited number of reports is available, look at the demo page for more details.
 
-## Codebase
+## System Design
 
-### Project Structure
+<img src="./resources/img/overview.jpg" alt="System Overview" width="700"/>
 
-```plaintext
-  # Backend application
-├── app/
+----
 
-    # FastAPI application
-│   ├── api.py
+Key stages:
+* LLM agent refactors a user query and extracts metadata;
+* Metadata is passed through the knowledge graph to match the query with the correct company document collection;
+* The LLM agent calls the appropriate retriever tool to search for either structural data (tabular entries) or unstructured information (text) within the company collection for a specified period;
+* Hybrid search (vector similarity + BM25) is used for the RAG. For structural collections, search is performed against OCRed tables with LLM-extracted metadata;
+* LLM chooses the most relevant documents, sends the sources to the user and provides the synthesized response.
 
-    # Core utilities and tools
-│   ├── common/
+### Unstructured Data Search (Qualitative Questions)
 
-      # Common parameters and prompts
-│   │   ├── __init__.py
+<img src="./resources/img/unstructured.jpg" alt="Unstructured Data Search (Qualitative Questions)" width="700"/>
 
-      # Company database matching logic
-│   │   ├── knowledge_graphs.py
+Information search on a given topic based on unstructured data (text).
 
-      # Agent tools for tabular analysis
-│   │   ├── structured_tools.py
+----
 
-      # Agent tools for text analysis
-│   │   ├── unstructured_tools.py
+### Structured Data Search (Quantitative Questions)
 
-      # Shared utility functions
-│   │   └── utils.py
+<img src="./resources/img/structured.jpg" alt="Structured Data Search (Quantitative Questions)" width="700"/>
 
-    # YAML-based prompt templates
-│   └── prompts/
+Information search on a given topic based on structured data (tables).
 
-  # Next.js web application
-├── frontend/
+----
 
-  # Project data and vector databases
-├── data/
+### Knowledge Graphs for query routing
 
-  # Backend container definition
-├── Dockerfile
+<img src="./resources/img/knowledge-graph.jpg" alt="Knowledge Graph Pipeline" width="700"/>
 
-  # Multi-container orchestration
-└── docker-compose.yml
-```
+The use of knowledge graph helps quickly map the user-used company name with the correcte knowledge database.
+
+----
+
+### Data Ingestion Pipeline
+
+#### Structured Data (Tables)
+<img src="./resources/img/structured-ingestion.jpg" alt="Structured Data Ingestion" width="700"/>
+
+----
+
+#### Unstructured Data (Text)
+<img src="./resources/img/unstructured-ingestion.jpg" alt="Unstructured Data Ingestion" width="700"/>
+
+----
+
 
 ## Getting Started
 
@@ -114,55 +119,48 @@ npm run dev
      - `DEV_API_URL`: Your backend API URL for development
      - `DEV_API_KEY`: Your development API key (must match backend's API_KEYS)
 
+## Codebase Structure
 
-## Architecture Overview
+```plaintext
+  # Backend application
+├── app/
 
-<img src="./resources/img/overview.jpg" alt="System Overview" width="700"/>
+    # FastAPI application
+│   ├── api.py
 
-----
+    # Core utilities and tools
+│   ├── common/
 
+      # Common parameters and prompts
+│   │   ├── __init__.py
 
-Key highlights:
-* The assistant engine is developed using LangChain.
-* The agent app is using Tools for interacting with the external world.
-* Hybrid search (vector similarity + BM25) is used for the RAG.
-* Knowledge graphs are used to store company metadata and route user query to the correct company collection.
+      # Company database matching logic
+│   │   ├── knowledge_graphs.py
 
-### Unstructured Data Search (Qualitative Questions)
+      # Agent tools for tabular analysis
+│   │   ├── structured_tools.py
 
-<img src="./resources/img/unstructured.jpg" alt="Unstructured Data Search (Qualitative Questions)" width="700"/>
+      # Agent tools for text analysis
+│   │   ├── unstructured_tools.py
 
-Information search on a given topic based on unstructured data (text).
+      # Shared utility functions
+│   │   └── utils.py
 
-----
+    # YAML-based prompt templates
+│   └── prompts/
 
-### Structured Data Search (Quantitative Questions)
+  # Next.js web application
+├── frontend/
 
-<img src="./resources/img/structured.jpg" alt="Structured Data Search (Quantitative Questions)" width="700"/>
+  # Project data and vector databases
+├── data/
 
-Information search on a given topic based on structured data (tables).
+  # Backend container definition
+├── Dockerfile
 
-----
-
-### Knowledge Graphs for query routing
-
-<img src="./resources/img/knowledge-graph.jpg" alt="Knowledge Graph Pipeline" width="700"/>
-
-The use of knowledge graph helps quickly map the user-used company name with the correcte knowledge base
-
-----
-
-### Data Ingestion Pipeline
-
-#### Structured Data (Tables)
-<img src="./resources/img/structured-ingestion.jpg" alt="Structured Data Ingestion" width="700"/>
-
-----
-
-#### Unstructured Data (Text)
-<img src="./resources/img/unstructured-ingestion.jpg" alt="Unstructured Data Ingestion" width="700"/>
-
-----
+  # Multi-container orchestration
+└── docker-compose.yml
+```
 
 ## Authors
 
