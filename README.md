@@ -16,7 +16,10 @@ Currently, only limited number of reports is available, look at the demo page fo
 Key stages:
 * LLM agent refactors a user query and extracts metadata;
 * Metadata is passed through the knowledge graph to match the query with the correct company document collection;
-* The LLM agent calls the appropriate retriever tool to search for either structural data (tabular entries) or unstructured information (text) within the company collection for a specified period;
+* The LLM agent calls the appropriate retriever tool to search for either of two options
+  - structural data (tabular entries), or
+  - unstructured information (text)
+detwithin the company collection for a specified period;
 * Hybrid search (vector similarity + BM25) is used for the RAG. For structural collections, search is performed against OCRed tables with LLM-extracted metadata;
 * LLM chooses the most relevant documents, sends the sources to the user and provides the synthesized response.
 
@@ -111,13 +114,13 @@ npm run dev
 ```
 
 2. Production:
-- Deploy to Vercel:
-  1. Connect your GitHub repository
-  2. Add environment variables in Vercel project settings:
-     - `PROD_API_URL`: Your backend API URL
-     - `PROD_API_KEY`: Your API key (must match backend's API_KEYS)
-     - `DEV_API_URL`: Your backend API URL for development
-     - `DEV_API_KEY`: Your development API key (must match backend's API_KEYS)
+Vercel was used for deployment here.
+1. Connect your GitHub repository
+2. Add environment variables in Vercel project settings:
+   - `PROD_API_URL`: Your backend API URL
+   - `PROD_API_KEY`: Your API key (must match backend's API_KEYS)
+   - `DEV_API_URL`: Your backend API URL for development
+   - `DEV_API_KEY`: Your development API key (must match backend's API_KEYS)
 
 ## Codebase Structure
 
