@@ -7,11 +7,17 @@ The project is live, [**check it out here.**](https://kapital-assistant.vercel.a
 
 Currently, only limited number of reports is available, look at the demo page for more details.
 
+The stack overview:
+
+- Python, FastAPI, Docker, AWS EC2 for backend;
+- LangChain for LLM agent management;
+- [FAISS](https://github.com/facebookresearch/faiss) for dense vector storage;
+- [Microsoft Table Transformer](https://huggingface.co/microsoft/table-transformer-detection) for table extraction;
+- Next.js, TypeScript, and Vercel for the frontend.
+
 ## System Design
 
-<img src="./resources/img/overview.jpg" alt="System Overview" width="700"/>
-
-----
+<img src="./resources/img/overview.jpg" alt="System Overview" width="900"/>
 
 Key stages:
 * LLM agent refactors a user query and extracts metadata;
@@ -22,9 +28,11 @@ Key stages:
 * Hybrid search (vector similarity + BM25) is used for the RAG. For structural collections, search is performed against OCRed tables with LLM-extracted metadata;
 * LLM chooses the most relevant documents, sends the sources to the user and provides the synthesized response.
 
+----
+
 ### Unstructured Data Search (Qualitative Questions)
 
-<img src="./resources/img/unstructured.jpg" alt="Unstructured Data Search (Qualitative Questions)" width="700"/>
+<img src="./resources/img/unstructured.jpg" alt="Unstructured Data Search (Qualitative Questions)" width="900"/>
 
 Information search on a given topic based on unstructured data (text).
 
@@ -32,7 +40,7 @@ Information search on a given topic based on unstructured data (text).
 
 ### Structured Data Search (Quantitative Questions)
 
-<img src="./resources/img/structured.jpg" alt="Structured Data Search (Quantitative Questions)" width="700"/>
+<img src="./resources/img/structured.jpg" alt="Structured Data Search (Quantitative Questions)" width="900"/>
 
 Information search on a given topic based on structured data (tables).
 
@@ -40,7 +48,7 @@ Information search on a given topic based on structured data (tables).
 
 ### Knowledge Graphs for query routing
 
-<img src="./resources/img/knowledge-graph.jpg" alt="Knowledge Graph Pipeline" width="700"/>
+<img src="./resources/img/knowledge-graph.jpg" alt="Knowledge Graph Pipeline" width="900"/>
 
 The use of knowledge graph helps quickly map the user-used company name with the correcte knowledge database.
 
@@ -49,12 +57,12 @@ The use of knowledge graph helps quickly map the user-used company name with the
 ### Data Ingestion Pipeline
 
 #### Structured Data (Tables)
-<img src="./resources/img/structured-ingestion.jpg" alt="Structured Data Ingestion" width="700"/>
+<img src="./resources/img/structured-ingestion.jpg" alt="Structured Data Ingestion" width="900"/>
 
 ----
 
 #### Unstructured Data (Text)
-<img src="./resources/img/unstructured-ingestion.jpg" alt="Unstructured Data Ingestion" width="700"/>
+<img src="./resources/img/unstructured-ingestion.jpg" alt="Unstructured Data Ingestion" width="900"/>
 
 ----
 
