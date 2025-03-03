@@ -17,7 +17,7 @@ The stack overview:
 
 ## System Design
 
-<img src="./resources/img/overview.jpg" alt="System Overview" width="900"/>
+<img src="./resources/img/overview.gif" alt="System Overview" width="900"/>
 
 Key stages:
 * LLM agent refactors a user query and extracts metadata;
