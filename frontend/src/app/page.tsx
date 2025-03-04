@@ -3,20 +3,30 @@ import ChatInterface from "./chat-interface"
 import { initialMessages } from "./initial-messages"
 import { FaGithub, FaLinkedin} from "react-icons/fa"
 import { MdOutlineContactPage } from "react-icons/md";
-import Head from 'next/head';
+
+// Define metadata for App Router
+export const metadata = {
+  title: 'Kapital Assistant',
+  description: 'AI-powered interface for exploring financial documentation',
+  openGraph: {
+    title: 'Kapital Assistant',
+    description: 'AI-powered interface for exploring financial documentation',
+    images: [
+      {
+        url: '/opengraph-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Kapital Assistant',
+      },
+    ],
+    type: 'website',
+    url: 'https://kapital-assistant.vercel.app/',
+  },
+}
 
 export default function Page() {
   return (
     <>
-      <Head>
-        <title>Kapital Assistant</title>
-        <meta name="description" content="AI-powered interface for exploring financial documentation" />
-        <meta property="og:title" content="Kapital Assistant" />
-        <meta property="og:description" content="AI-powered interface for exploring financial documentation" />
-        <meta property="og:image" content="/opengraph-image.png" />
-        <meta property="og:url" content="https://kapital-assistant.vercel.app/" />
-        <meta property="og:type" content="website" />
-      </Head>
       <main className="container mx-auto max-w-2xl min-h-screen p-2 sm:p-4 flex flex-col bg-gray-50">
         <div className="mb-3 sm:mb-4 text-center">
           <h1 className="text-xl sm:text-2xl font-bold mb-1 sm:mb-2">Kapital Assistant</h1>
