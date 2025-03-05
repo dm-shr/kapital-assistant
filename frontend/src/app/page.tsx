@@ -3,6 +3,7 @@ import ChatInterface from "./chat-interface"
 import { initialMessages } from "./initial-messages"
 import { FaGithub, FaLinkedin} from "react-icons/fa"
 import { MdOutlineContactPage } from "react-icons/md";
+import { WaitlistPanel } from "@/components/waitlist-panel";
 
 // Define metadata for App Router
 export const metadata = {
@@ -64,9 +65,15 @@ export default function Page() {
           </div>
         </div>
 
-        <ClientOnly>
-          <ChatInterface initialMessages={initialMessages} />
-        </ClientOnly>
+        <div className="relative">
+          <ClientOnly>
+            <ChatInterface initialMessages={initialMessages} />
+          </ClientOnly>
+
+          <ClientOnly>
+            <WaitlistPanel />
+          </ClientOnly>
+        </div>
 
         <div className="mt-4 text-center text-sm text-gray-600">
           <span className="font-medium">Made by: </span>
