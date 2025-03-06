@@ -1,3 +1,5 @@
+"use client";
+
 import ClientOnly from "@/components/client-only"
 import ChatInterface from "./chat-interface"
 import { initialMessages } from "./initial-messages"
@@ -5,26 +7,8 @@ import { FaGithub, FaLinkedin} from "react-icons/fa"
 import { MdOutlineContactPage } from "react-icons/md";
 import { WaitlistPanel } from "@/components/waitlist-panel";
 import { v4 as uuidv4 } from 'uuid';
+import { useEffect, useState } from 'react';
 
-// Define metadata for App Router
-export const metadata = {
-  title: 'Kapital Assistant',
-  description: 'AI-powered interface for exploring financial documentation',
-  openGraph: {
-    title: 'Kapital Assistant',
-    description: 'AI-powered interface for exploring financial documentation',
-    images: [
-      {
-        url: '/opengraph-image.png',
-        width: 1200,
-        height: 630,
-        alt: 'Kapital Assistant',
-      },
-    ],
-    type: 'website',
-    url: 'https://kapital-assistant.vercel.app/',
-  },
-}
 
 const getUserId = () => {
   let userId = localStorage.getItem("user_id");
@@ -36,7 +20,12 @@ const getUserId = () => {
 };
 
 export default function Page() {
-  const userId = getUserId();
+  const [userId, setUserId] = useState<string>('');
+
+  useEffect(() => {
+    const id = getUserId();
+    setUserId(id);
+  }, []);
 
   return (
     <>
