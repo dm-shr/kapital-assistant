@@ -15,9 +15,10 @@ import { CollapsiblePrompts } from "@/components/collapsible-prompts"
 
 interface ChatInterfaceProps {
   initialMessages: Message[]
+  userId: string
 }
 
-export default function ChatInterface({ initialMessages }: ChatInterfaceProps) {
+export default function ChatInterface({ initialMessages, userId }: ChatInterfaceProps) {
   const [input, setInput] = useState("")
   const [messages, setMessages] = useState<Message[]>(initialMessages)
   const [isLoading, setIsLoading] = useState(false)
@@ -50,7 +51,8 @@ export default function ChatInterface({ initialMessages }: ChatInterfaceProps) {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            messages: [...messages, userMessage]
+            messages: [...messages, userMessage],
+            userId: userId
           }),
         })
 

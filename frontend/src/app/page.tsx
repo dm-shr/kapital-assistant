@@ -4,6 +4,7 @@ import { initialMessages } from "./initial-messages"
 import { FaGithub, FaLinkedin} from "react-icons/fa"
 import { MdOutlineContactPage } from "react-icons/md";
 import { WaitlistPanel } from "@/components/waitlist-panel";
+import { v4 as uuidv4 } from 'uuid';
 
 // Define metadata for App Router
 export const metadata = {
@@ -25,7 +26,18 @@ export const metadata = {
   },
 }
 
+const getUserId = () => {
+  let userId = localStorage.getItem("user_id");
+  if (!userId) {
+    userId = uuidv4();
+    localStorage.setItem("user_id", userId);
+  }
+  return userId as string;
+};
+
 export default function Page() {
+  const userId = getUserId();
+
   return (
     <>
       <main className="container mx-auto max-w-2xl min-h-screen p-2 sm:p-4 flex flex-col bg-gray-50">
@@ -67,7 +79,7 @@ export default function Page() {
 
         <div className="relative">
           <ClientOnly>
-            <ChatInterface initialMessages={initialMessages} />
+            <ChatInterface initialMessages={initialMessages} userId={userId} />
           </ClientOnly>
 
           <ClientOnly>
