@@ -20,6 +20,7 @@ from langchain_core.messages import HumanMessage
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 from pydantic import BaseModel
+from supabase import create_client
 
 from app.common import logger
 from app.common import MODEL_AGENT
@@ -34,6 +35,30 @@ app = FastAPI()
 
 # Get API keys from environment and split into list
 API_KEYS = set(os.getenv("API_KEYS", "").split(","))
+
+SUPABASE_URL = os.getenv("SUPABASE_URL")
+SUPABASE_KEY = os.getenv("SUPABASE_KEY")
+
+if not SUPABASE_URL or not SUPABASE_KEY:
+    raise ValueError("Supabase URL and Key must be set in environment variables")
+
+supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
+
+
+def store_conversation(user_id: str, chat_history: List[dict]):
+    """Stores updated chat history in Supabase."""
+    data = {
+        "user_id": user_id,
+        "chat_history": chat_history,  # JSON data
+    }
+    response = (
+        supabase.table("conversations")
+        .insert(
+            data,
+        )
+        .execute()
+    )
+    return response
 
 
 # HTTPS enforcement middleware for production
@@ -124,6 +149,7 @@ class Message(BaseModel):
 
 class ChatRequest(BaseModel):
     messages: List[Message]
+    userId: str  # Add user ID to the request
 
 
 class Image(BaseModel):
@@ -179,6 +205,11 @@ async def chat(request: ChatRequest):
 
         else:
             response_content = result["output"]
+
+        # Store conversation in Supabase
+        all_messages = request.messages + [Message(role="assistant", content=response_content)]
+        chat_history_for_db = [msg.dict() for msg in all_messages]
+        store_conversation(request.userId, chat_history_for_db)
 
         return ChatResponse(
             role="assistant", content=response_content, images=images if images else None

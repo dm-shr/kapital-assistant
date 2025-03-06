@@ -17,3 +17,4 @@ rank_bm25
 watchdog
 fastapi
 uvicorn
+supabase
