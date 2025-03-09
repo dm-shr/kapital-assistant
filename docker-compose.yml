@@ -4,13 +4,17 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - SERVICE_PORT=${SERVICE_PORT:-8000}
     container_name: kapital-api
     env_file:
       - .env
+    environment:
+      - SERVICE_PORT=${SERVICE_PORT:-8000}
     ports:
-      - ${FASTAPI_EXTERNAL_PORT}:8000
+      - "${FASTAPI_EXTERNAL_PORT}:8000"
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:${SERVICE_PORT}/api/health"]
       interval: 30s
       timeout: 10s
       retries: 3

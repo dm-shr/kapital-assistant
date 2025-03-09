@@ -24,8 +24,5 @@ COPY . /kapital
 # Set app working directory
 WORKDIR /kapital
 
-# Health check
-HEALTHCHECK CMD curl --fail http://localhost:${SERVICE_PORT}/api/health || exit 1
-
 # Start the application with uvicorn
 CMD uvicorn app.api:app --host 0.0.0.0 --port ${SERVICE_PORT} --reload
